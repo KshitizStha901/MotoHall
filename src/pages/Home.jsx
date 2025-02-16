@@ -1,20 +1,24 @@
-import React, { useEffect } from 'react'
-import { Categories, mockData } from '../assets/mockData'
-import FrontCar from '../assets/Images/FrontCar.jpg'
-import InfoSection from '../components/infoSection'
-import CategorySection from '../components/CategorySection'
-import Intro from '../assets/Images/Intro.mov'
-import { setProducts } from '../redux/productSlice'
-import { useDispatch, useSelector } from 'react-redux'
-useDispatch
+import React, { useEffect } from 'react';
+import { Categories, mockData } from '../assets/mockData';
+import FrontCar from '../assets/Images/FrontCar.jpg';
+import InfoSection from '../components/infoSection';
+import CategorySection from '../components/CategorySection';
+import Intro from '../assets/Images/Intro.mov';
+import { setProducts } from '../redux/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import ProductCard from '../components/ProductCard';  
+import Shop from './Shop';
 
 const Home = () => {
-  const dispatch = useDispatch()
-  const products = useSelector(state=> state.product)
-  useEffect(()=>{
-    dispatch(setProducts(mockData))
-  })
+  const dispatch = useDispatch();
+  const products = useSelector(state => state.product);
+  
+  useEffect(() => {
+    dispatch(setProducts(mockData));
+  }, [dispatch]);  
+  
   return (
+    <div>
     <div className='bg-white mt-2 px-4 md:px-16 lg:px-24'>
       <div className='container mx-auto py-4 flex flex-col md:flex-row space-x-2'>
         <div className='w-full md:w-3/12'>
@@ -48,17 +52,18 @@ const Home = () => {
       </div>
       <div className='container mx-auto py-12'>
         <h2 className='text-2xl font-bold mb-6 text-center'>Top Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cole-2 md:grid-cols-4 1g:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
           {
-            products.products.slice(0,5).map(((products)=>(
-              <ProductCard product={product} />
-            )))
+            products.products.slice(0, 5).map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))
           }
         </div>
-
       </div>
     </div>
-  )
-}
+   <Shop />
+   </div>
+  );
+};
 
-export default Home
+export default Home;
